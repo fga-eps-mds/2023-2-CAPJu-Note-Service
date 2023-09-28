@@ -162,10 +162,10 @@ Certifique-se de ler o [Guia de Contribuição](https://github.com/fga-eps-mds/2
 
 ## Licença
 
-O CAPJu está sob as regras aplicadas na licença [MIT](https://github.com/fga-eps-mds/2023-1-CAPJu-Front/blob/main/LICENSE)
+O CAPJu está sob as regras aplicadas na licença [MIT](https://github.com/fga-eps-mds/2023-2-CAPJu-Front/blob/main/LICENSE)
 
 ## Contribuidores
 
-<a href="https://github.com/fga-eps-mds/2023-1-CAPJu-Services/graphs/contributors">
-  <img src="https://contrib.rocks/image?repo=fga-eps-mds/2023-1-CAPJu-Services" />
+<a href="https://github.com/fga-eps-mds/2023-2-CAPJu-Services/graphs/contributors">
+  <img src="https://contrib.rocks/image?repo=fga-eps-mds/2023-2-CAPJu-Services" />
 </a>
