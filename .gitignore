@@ -3,3 +3,4 @@ data
 *node_modules*
 *coverage*
 *yarn*
+package-lock.json
