@@ -6,15 +6,11 @@ services:
       context: ./
       dockerfile: Dockerfile
     container_name: note
-    command:
-      [
-        "npm",
-        "run",
-        "start",
-      ]
+    entrypoint: ["/bin/sh", "-c", "./entrypoint.sh"]
     restart: always
     volumes:
       - ./:/app
+      - /app/node_modules
     ports:
       - 8083:8083
     networks:
