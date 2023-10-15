@@ -12,9 +12,14 @@ class NoteModel extends Model {
           allowNull: false,
         },
         commentary: DataTypes.STRING(500),
-        record: {
-          type: DataTypes.STRING(20),
+        idProcess: {
+          type: DataTypes.INTEGER,
+          references: {
+              model: 'process',
+              key: 'idProcess',
+          },
           allowNull: false,
+          onDelete: 'RESTRICT'
         },
         idStageA: {
           type: DataTypes.INTEGER,
@@ -31,6 +36,9 @@ class NoteModel extends Model {
       },
     );
   }
+  static associate(models) {
+        this.belongsTo(models.Process, { foreignKey: 'idProcess', as: 'relatedProcess' });
+    }
 }
 
 NoteModel.init(sequelizeConfig, Sequelize.DataTypes);
