@@ -10,7 +10,7 @@ jobs:
     steps:
       - name: Get file name
         id: name
-        run: echo "::set-output name=file_name::fga-eps-mds-2023-2-Capju-ServicesNote-$(TZ='America/Sao_Paulo' date +'%m-%d-%Y-%H-%M-%S')-${{github.ref_name}}"
+        run: echo "::set-output name=file_name::fga-eps-mds-2023-2-Capju-Note-Service-$(TZ='America/Sao_Paulo' date +'%m-%d-%Y-%H-%M-%S')-${{github.ref_name}}"
 
       - name: Copy repository
         uses: actions/checkout@v2
@@ -31,6 +31,6 @@ jobs:
           cp -R fga-eps-mds*.json doc/analytics-raw-data
           cd doc
           git add .
-          git commit -m "Métricas SonarCloud Services Note - ${{ github.event.repository.name }} ${{ github.ref_name }}"
+          git commit -m "Métricas SonarCloud - ${{ github.event.repository.name }} ${{ github.ref_name }}"
           git push
           echo "Arquivos de métricas gerado com sucesso."
