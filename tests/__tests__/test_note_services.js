@@ -1,168 +1,161 @@
-import NoteService from "../../src/services/note";
+import NoteService from '../../src/services/note';
 
 const NoteModelMock = {
-    findAll: jest.fn(),
-    findOne: jest.fn(),
-    create: jest.fn(),
-    update: jest.fn(),
-    destroy: jest.fn(),
-  };
+  findAll: jest.fn(),
+  findOne: jest.fn(),
+  create: jest.fn(),
+  update: jest.fn(),
+  destroy: jest.fn(),
+};
 
-describe("NoteService", () =>{
-    let reqMock;
-    let resMock;
-    let noteService;
+describe('NoteService', () => {
+  let reqMock;
+  let resMock;
+  let noteService;
 
-    beforeEach(() => {
-        reqMock = {
-          body: {},
-          params: {},
-        };
-        resMock = {
-          json: jest.fn(),
-          status: jest.fn(() => resMock),
-        };
-        noteService = new NoteService(NoteModelMock);
+  beforeEach(() => {
+    reqMock = {
+      body: {},
+      params: {},
+    };
+    resMock = {
+      json: jest.fn(),
+      status: jest.fn(() => resMock),
+    };
+    noteService = new NoteService(NoteModelMock);
+  });
+
+  describe('Basics', () => {
+    it('Criar uma nota', async () => {
+      const newNote = {
+        idNote: 1,
+        commentary: 'Atrasada',
+        record: '24200752720234015258',
+        idStageA: 1,
+        idStageB: 2,
+      };
+      NoteModelMock.create.mockResolvedValue({ idNote: 3, ...newNote });
+
+      const result = await noteService.createNote(newNote);
+
+      expect(result).toEqual({ idNote: 3, ...newNote });
+      expect(NoteModelMock.create).toHaveBeenCalledWith(newNote);
     });
 
-    describe("Basics", () => {
-        it('Criar uma nota', async () => {
+    it('Achar todas notas de um registro', async () => {
+      const notes = [
+        {
+          idNote: 1,
+          commentary: 'Atrasada',
+          record: '24200752720234015258',
+          idStageA: 1,
+          idStageB: 2,
+        },
+        {
+          idNote: 2,
+          commentary: 'Tudo Certo',
+          record: '24200752720234015258',
+          idStageA: 2,
+          idStageB: 3,
+        },
+        {
+          idNote: 3,
+          commentary: 'Nunca realizada',
+          record: '24200752720234015258',
+          idStageA: 3,
+          idStageB: 4,
+        },
+      ];
 
-            const newNote = {
-                idNote: 1,
-                commentary: "Atrasada",
-                record: "24200752720234015258",
-                idStageA: 1,
-                idStageB: 2
-            }
-            NoteModelMock.create.mockResolvedValue({ idNote: 3,  ...newNote });
+      const record = '24200752720234015258';
 
-            const result = await noteService.createNote(newNote);
+      NoteModelMock.findAll.mockResolvedValue(notes);
 
-            expect(result).toEqual({ idNote: 3,  ...newNote });
-            expect(NoteModelMock.create).toHaveBeenCalledWith(newNote);
-      
-          });
+      const result = await noteService.findAllByRecord(record);
 
-          it('Achar todas notas de um registro', async () => {
-            const notes = [{
-                idNote: 1,
-                commentary: "Atrasada",
-                record: "24200752720234015258",
-                idStageA: 1,
-                idStageB: 2
-            },
-            {
-                idNote: 2,
-                commentary: "Tudo Certo",
-                record: "24200752720234015258",
-                idStageA: 2,
-                idStageB: 3
-            },
-            {
-                idNote: 3,
-                commentary: "Nunca realizada",
-                record: "24200752720234015258",
-                idStageA: 3,
-                idStageB: 4
-            }];
-            
-            const record = "24200752720234015258";
+      expect(result).toEqual(notes);
+      expect(NoteModelMock.findAll).toHaveBeenCalledWith({
+        where: { record },
+      });
+    });
 
-            NoteModelMock.findAll.mockResolvedValue(notes);
+    it('Achar uma nota pelo ID', async () => {
+      const note = {
+        idNote: 2,
+        commentary: 'Atrasada',
+        record: '24200752720234015258',
+        idStageA: 1,
+        idStageB: 2,
+      };
 
-            const result = await noteService.findAllByRecord(record);
+      const idNote = 2;
 
-            expect(result).toEqual(notes);
-            expect(NoteModelMock.findAll).toHaveBeenCalledWith({
-                where: { record },
-            });
+      NoteModelMock.findOne.mockResolvedValue(note);
 
-          });
+      const result = await noteService.findOneById(idNote);
 
-          it('Achar uma nota pelo ID', async () => {
-            const note = {
-                idNote: 2,
-                commentary: "Atrasada",
-                record: "24200752720234015258",
-                idStageA: 1,
-                idStageB: 2
-            };
-            
-            const idNote = 2;
+      expect(result).toEqual(note);
+      expect(NoteModelMock.findOne).toHaveBeenCalledWith({
+        where: { idNote },
+      });
+    });
 
-            NoteModelMock.findOne.mockResolvedValue(note);
+    it('Deletar uma nota pelo ID', async () => {
+      const response = 1;
 
-            const result = await noteService.findOneById(idNote);
+      const idNote = 2;
 
-            expect(result).toEqual(note);
-            expect(NoteModelMock.findOne).toHaveBeenCalledWith({
-                where: { idNote },
-            });
-            
-          });
+      NoteModelMock.destroy.mockResolvedValue(response);
 
-          it('Deletar uma nota pelo ID', async () => {
-            const response = 1;
-            
-            const idNote = 2;
+      const result = await noteService.deleteNoteById(idNote);
 
-            NoteModelMock.destroy.mockResolvedValue(response);
+      expect(result).toEqual(response);
+      expect(NoteModelMock.destroy).toHaveBeenCalledWith({
+        where: { idNote },
+      });
+    });
 
-            const result = await noteService.deleteNoteById(idNote);
+    it('Atualizar uma nota - Sucesso', async () => {
+      const update = [1]; // O Sequalize retorna o número de objetos encontrados
 
-            expect(result).toEqual(response);
-            expect(NoteModelMock.destroy).toHaveBeenCalledWith({
-                where: { idNote },
-            });
-            
-          });
+      const note = {
+        idNote: 1,
+        commentary: 'Atrasada',
+        record: '24200752720234015258',
+        idStageA: 1,
+        idStageB: 2,
+      };
 
-          it('Atualizar uma nota - Sucesso', async () => {
+      const idNote = 2;
+      const commentary = 'Some commentary';
 
-            const update = [1]; // O Sequalize retorna o número de objetos encontrados
-            
-            const note = {
-                idNote: 1,
-                commentary: "Atrasada",
-                record: "24200752720234015258",
-                idStageA: 1,
-                idStageB: 2
-            }
+      NoteModelMock.update.mockResolvedValue(update);
+      NoteModelMock.findOne.mockResolvedValue(note);
 
-            const idNote = 2;
-            const commentary = "Some commentary";
+      const result = await noteService.updateNote(commentary, idNote);
 
-            NoteModelMock.update.mockResolvedValue(update);
-            NoteModelMock.findOne.mockResolvedValue(note);
+      expect(result).toEqual(note);
+      expect(NoteModelMock.update).toHaveBeenCalledWith(
+        { commentary },
+        { where: { idNote } },
+      );
+    });
 
-            const result = await noteService.updateNote(commentary, idNote);
+    it('Atualizar uma nota - Falha', async () => {
+      const update = [0]; // O Sequalize retorna o número de objetos encontrados
+      const updateResponse = false;
+      const idNote = 2;
+      const commentary = 'Some commentary';
 
-            expect(result).toEqual(note);
-            expect(NoteModelMock.update).toHaveBeenCalledWith(
-                { commentary },
-                { where: { idNote } },
-            );
-            
-          });
+      NoteModelMock.update.mockResolvedValue(update);
 
-          it('Atualizar uma nota - Falha', async () => {
+      const result = await noteService.updateNote(commentary, idNote);
 
-            const update = [0]; // O Sequalize retorna o número de objetos encontrados
-            const updateResponse = false;
-            const idNote = 2;
-            const commentary = "Some commentary";
-
-            NoteModelMock.update.mockResolvedValue(update);
-
-            const result = await noteService.updateNote(commentary, idNote);
-
-            expect(result).toEqual(updateResponse);
-            expect(NoteModelMock.update).toHaveBeenCalledWith(
-                { commentary },
-                { where: { idNote } },
-            );
-            
-          });
-    })
+      expect(result).toEqual(updateResponse);
+      expect(NoteModelMock.update).toHaveBeenCalledWith(
+        { commentary },
+        { where: { idNote } },
+      );
+    });
+  });
 });
