@@ -8,7 +8,7 @@ const resMock = {
   json: jest.fn(),
 };
 
-describe("note endpoints", () => {
+describe('note endpoints', () => {
   let noteController;
 
   beforeEach(() => {
@@ -38,15 +38,15 @@ describe("note endpoints", () => {
   //   expect(resMock.json).toHaveBeenCalledWith(testNote);
   // });
 
-  test("newNote - failed to create new note", async () => {
+  test('newNote - failed to create new note', async () => {
     const testNote = {
-      commentary: "obs",
-      record: "123",
+      commentary: 'obs',
+      record: '123',
       idStageA: 1,
       idStageB: 2,
     };
 
-    const errorMessage = "Database error";
+    const errorMessage = 'Database error';
     noteController.noteService.createNote = jest
       .fn()
       .mockRejectedValue(new Error(errorMessage));
@@ -56,7 +56,7 @@ describe("note endpoints", () => {
 
     expect(resMock.status).toHaveBeenCalledWith(500);
     expect(resMock.json).toHaveBeenCalledWith({
-      message: `Erro ao criar observação: Error: ${errorMessage}`
+      message: `Erro ao criar observação: Error: ${errorMessage}`,
     });
   });
 
@@ -168,8 +168,8 @@ describe("note endpoints", () => {
   //   expect(resMock.json).toHaveBeenCalledWith({ message: 'Observação deletada com sucesso.' });
   // });
 
-  test("delete - failed to remove note", async () => {
-    const errorMessage = "Database error";
+  test('delete - failed to remove note', async () => {
+    const errorMessage = 'Database error';
     noteController.noteService.findOneById = jest
       .fn()
       .mockRejectedValue(new Error(errorMessage));
@@ -179,14 +179,12 @@ describe("note endpoints", () => {
 
     expect(resMock.status).toHaveBeenCalledWith(500);
     expect(resMock.json).toHaveBeenCalledWith({
-      message: `Erro ao deletar observação: Error: ${errorMessage}`
+      message: `Erro ao deletar observação: Error: ${errorMessage}`,
     });
   });
 
-  test("delete - note not found", async () => {
-    noteController.noteService.findOneById = jest
-      .fn()
-      .mockResolvedValue(false);
+  test('delete - note not found', async () => {
+    noteController.noteService.findOneById = jest.fn().mockResolvedValue(false);
 
     const idNote = 1;
     reqMock.params = { idNote };
@@ -194,7 +192,7 @@ describe("note endpoints", () => {
 
     expect(resMock.status).toHaveBeenCalledWith(400);
     expect(resMock.json).toHaveBeenCalledWith({
-      error: `idNote ${idNote} não existe!`
+      error: `idNote ${idNote} não existe!`,
     });
   });
 });

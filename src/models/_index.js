@@ -1,7 +1,7 @@
 import NoteModel from './note.js';
-import ProcessModel from "./process.js";
-import ProcessAudModel from "./processAud.js";
-import User from "./user.js";
+import ProcessModel from './process.js';
+import ProcessAudModel from './processAud.js';
+import User from './user.js';
 
 const Note = NoteModel;
 const Process = ProcessModel;

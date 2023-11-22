@@ -1,5 +1,5 @@
-import {Model, DataTypes, Sequelize} from "sequelize";
-import sequelizeConfig from "../config/sequelize.js";
+import { Model, DataTypes, Sequelize } from 'sequelize';
+import sequelizeConfig from '../config/sequelize.js';
 
 class UserModel extends Model {
   static init(sequelize) {
@@ -43,15 +43,18 @@ class UserModel extends Model {
       },
       {
         sequelize,
-        tableName: "users",
-      }
+        tableName: 'users',
+      },
     );
 
     return this;
   }
 
   static associate(models) {
-    this.hasMany(models.ProcessAud, { foreignKey: 'changedBy', as: 'auditRecords' });
+    this.hasMany(models.ProcessAud, {
+      foreignKey: 'changedBy',
+      as: 'auditRecords',
+    });
   }
 }
 

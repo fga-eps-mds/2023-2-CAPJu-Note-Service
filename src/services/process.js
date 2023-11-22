@@ -18,7 +18,6 @@ class ProcessService {
       raw: true,
     });
   }
-
 }
 
 export default ProcessService;
