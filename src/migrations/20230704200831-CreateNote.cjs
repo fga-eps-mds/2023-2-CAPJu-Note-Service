@@ -1,6 +1,5 @@
 'use strict';
 
-/** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface, Sequelize) {
     await queryInterface.createTable('note', {
@@ -12,15 +11,11 @@ module.exports = {
       },
       commentary: {
         type: Sequelize.STRING(500),
+        allowNull: true,
       },
-      idProcess: {
-        type: Sequelize.INTEGER,
-        references: {
-          model: 'process',
-          key: 'idProcess',
-        },
+      record: {
+        type: Sequelize.STRING(20),
         allowNull: false,
-        onDelete: 'RESTRICT',
       },
       idStageA: {
         type: Sequelize.INTEGER,
@@ -28,6 +23,14 @@ module.exports = {
       },
       idStageB: {
         type: Sequelize.INTEGER,
+        allowNull: false,
+      },
+      createdAt: {
+        type: Sequelize.DATE,
+        allowNull: false,
+      },
+      updatedAt: {
+        type: Sequelize.DATE,
         allowNull: false,
       },
     });
