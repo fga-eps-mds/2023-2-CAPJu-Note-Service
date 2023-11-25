@@ -4,9 +4,11 @@ about: Template para criação de issues genéricas
 title: ''
 labels: ''
 assignees: ''
+
 ---
 
 ## Descrição.
+
 
 <!--  ### Issue relacionada com [US <Numero>](link) <Se tiver> -->
 

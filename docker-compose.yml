@@ -1,4 +1,4 @@
-version: '3.3'
+version: "3.3"
 
 services:
   note:
@@ -6,7 +6,7 @@ services:
       context: ./
       dockerfile: Dockerfile
     container_name: note
-    command: ['/bin/sh', '-c', 'npm start']
+    command: [ "/bin/sh", "-c", "npm start" ]
     restart: always
     volumes:
       - ./:/app
