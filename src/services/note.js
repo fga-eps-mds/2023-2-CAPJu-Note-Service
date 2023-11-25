@@ -13,6 +13,12 @@ class NoteService {
     });
   }
 
+  async findAllByIdProcess(idProcess) {
+    return this.note.findAll({
+      where: { idProcess },
+    });
+  }
+
   async findOneById(idNote) {
     return this.note.findOne({
       where: { idNote },
