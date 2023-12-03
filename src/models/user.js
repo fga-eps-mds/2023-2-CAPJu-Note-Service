@@ -51,10 +51,9 @@ class UserModel extends Model {
   }
 
   static associate(models) {
-    this.hasMany(models.ProcessAud, {
-      foreignKey: 'changedBy',
-      as: 'auditRecords',
-    });
+    this.hasMany(models.ProcessAud, { foreignKey: 'changedBy',  as: 'auditRecords', });
+    this.belongsTo(models.Unit, { foreignKey: 'idUnit', as: 'unit' });
+     this.belongsTo(models.Role, { foreignKey: 'idRole', as: 'role' });
   }
 }
 
