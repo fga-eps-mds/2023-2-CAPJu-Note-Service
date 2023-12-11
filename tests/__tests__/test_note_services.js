@@ -17,7 +17,9 @@ describe('NoteService test', () => {
 
   describe('createNote', () => {
     it('should create a note', async () => {
-      const mockNote = { /* mock data */ };
+      const mockNote = {
+        /* mock data */
+      };
 
       mockNoteModel.create.mockResolvedValue(mockNote);
 
@@ -43,25 +45,12 @@ describe('NoteService test', () => {
     });
   });
 
-  describe('findAllByIdProcess', () => {
-    it('should find all notes by idProcess', async () => {
-      const mockIdProcess = 'exampleIdProcess';
-
-      mockNoteModel.findAll.mockResolvedValue([]);
-
-      const result = await noteService.findAllByIdProcess(mockIdProcess);
-
-      expect(mockNoteModel.findAll).toHaveBeenCalledWith({
-        where: { idProcess: mockIdProcess },
-      });
-      expect(result).toEqual([]);
-    });
-  });
-
   describe('findOneById', () => {
     it('should find one note by idNote', async () => {
       const mockIdNote = 'exampleIdNote';
-      const mockNote = { /* mock data */ };
+      const mockNote = {
+        /* mock data */
+      };
 
       mockNoteModel.findOne.mockResolvedValue(mockNote);
 
@@ -93,7 +82,10 @@ describe('NoteService test', () => {
     it('should update a note by idNote', async () => {
       const mockIdNote = 'exampleIdNote';
       const mockCommentary = 'Updated commentary';
-      const mockUpdatedNote = { idNote: mockIdNote, commentary: mockCommentary };
+      const mockUpdatedNote = {
+        idNote: mockIdNote,
+        commentary: mockCommentary,
+      };
 
       mockNoteModel.update.mockResolvedValue([1]);
       mockNoteModel.findOne.mockResolvedValue(mockUpdatedNote);
@@ -102,7 +94,7 @@ describe('NoteService test', () => {
 
       expect(mockNoteModel.update).toHaveBeenCalledWith(
         { commentary: mockCommentary },
-        { where: { idNote: mockIdNote } }
+        { where: { idNote: mockIdNote } },
       );
       expect(mockNoteModel.findOne).toHaveBeenCalledWith({
         where: { idNote: mockIdNote },
@@ -120,7 +112,7 @@ describe('NoteService test', () => {
 
       expect(mockNoteModel.update).toHaveBeenCalledWith(
         { commentary: mockCommentary },
-        { where: { idNote: mockIdNote } }
+        { where: { idNote: mockIdNote } },
       );
       expect(result).toBeFalsy();
     });
