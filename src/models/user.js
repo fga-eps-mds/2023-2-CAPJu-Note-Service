@@ -55,6 +55,8 @@ class UserModel extends Model {
       foreignKey: 'changedBy',
       as: 'auditRecords',
     });
+    this.belongsTo(models.Unit, { foreignKey: 'idUnit', as: 'unit' });
+    this.belongsTo(models.Role, { foreignKey: 'idRole', as: 'role' });
   }
 }
 
